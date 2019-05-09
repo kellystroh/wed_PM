@@ -18,7 +18,7 @@ class WebRetriever():
 
     def connector(self):
         print(self.URL)
-        self.sock.connect((self.URL, 80))
+        self.sock.connect((self.URL, 80)
 
     def requestInfo(self):
         hostString = "Host: " + self.URL + "\r\n"
@@ -35,7 +35,8 @@ class WebRetriever():
         self.head = b''.join(headbytes)
 
     def readHeaders(self):
-        lines = head.split(b'\r\n')
+        lines = self.head.split(b'\r\n')
+        # edited line above: changed head to self.head
 
         status_line = lines[0]
         header_lines = lines[1:]
@@ -64,12 +65,21 @@ class WebRetriever():
     def printTag(self):
         start_tag = "<" + self.tag + ">"
         end_tag = "</" + self.tag + ">"
-        start_pos = content.index(start_tag)+len(start_tag)
-        end_pos = content.index(end_tag)
+        start_pos = self.content.index(start_tag)+len(start_tag)
+        # edited line above: changed content to self.content
+        end_pos = self.content.index(end_tag)
+        # edited line above: changed content to self.content
 
-        tagContent = content[start_pos:end_pos]
+        tagContent = self.content[start_pos:end_pos]
+        # edited line above: changed content to self.content
 
         print(tagContent)
+
+
+''' 
+Kelly comments: When I got this to work, I opened a blank jupyter notebook, 
+navigated to the wed_pm directory, and typed "from new import WebRetriever".
+In the next cell, I entered the following code:
 
 zeus = WebRetriever("www.example.com","title")
 zeus.connector()
@@ -77,3 +87,4 @@ zeus.requestInfo()
 zeus.readHeaders()
 zeus.getContent()
 zeus.printTag()
+'''
